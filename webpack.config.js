@@ -13,7 +13,10 @@ module.exports = {
         port: 10086
     },
     resolve: {
-        extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx']
+        extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx'],
+        alias: {
+            '@': path.resolve(__dirname, 'src')
+        }
     },
     module: {
         rules: [
@@ -34,7 +37,15 @@ module.exports = {
                         cacheDirectory: true
                     }
                 }
-            }
+            },
+            {
+                test: /\.less$/i,
+                use: ['style-loader', 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            },
         ]
     },
     plugins: [
