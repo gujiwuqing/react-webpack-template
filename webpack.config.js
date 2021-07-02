@@ -10,7 +10,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, './src/'),
         open: true,
-        port: 10086
+        port: 9999
     },
     resolve: {
         extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx'],
@@ -21,26 +21,37 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/, // jsx/js文件的正则
-                exclude: /node_modules/, // 排除 node_modules 文件夹
+                test: /.jsx?$/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
-                    // loader 是 babel
                     loader: 'babel-loader',
                     options: {
-                        // babel 转义的配置选项
-                        babelrc: false,
+                        "plugins": [
+                            [
+                                "import", {
+                                    "libraryName": "antd",
+                                    "style": true
+                                }
+                            ]
+                        ],
                         presets: [
                             // 添加 preset-react
                             require.resolve('@babel/preset-react'),
-                            [require.resolve('@babel/preset-env'), {modules: false}]
+                            [require.resolve('@babel/preset-env'), { modules: false }]
                         ],
-                        cacheDirectory: true
                     }
                 }
             },
             {
                 test: /\.less$/i,
-                use: ['style-loader', 'css-loader', 'less-loader']
+                use: ['style-loader', 'css-loader', {
+                    loader: "less-loader",
+                    options: {
+                        lessOptions: {
+                            javascriptEnabled: true,
+                        },
+                    },
+                },]
             },
             {
                 test: /\.css$/i,
