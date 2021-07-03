@@ -1,29 +1,23 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
-    entry: './src/main.jsx',
+    entry: './src/main.tsx', // 入口文件
     output: {
-        filename: 'main.js',
-        path: path.resolve(__dirname, 'dist'),
-        clean: true
+        path: path.resolve(__dirname, 'dist'), // 输出目录
+        filename: 'bundle.js' // 输出文件
     },
     devServer: {
         contentBase: path.join(__dirname, './src/'),
         open: true,
-        port: 9999
-    },
-    resolve: {
-        extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx'],
-        alias: {
-            '@': path.resolve(__dirname, 'src')
-        }
+        port: 10099
     },
     module: {
         rules: [
             {
-                test: /.jsx?$/,
+                test: /\.tsx?$/, // ts文件处理
                 exclude: /(node_modules|bower_components)/,
-                use: {
+                use: ['ts-loader', {
                     loader: 'babel-loader',
                     options: {
                         "plugins": [
@@ -41,6 +35,7 @@ module.exports = {
                         ],
                     }
                 }
+                ]
             },
             {
                 test: /\.less$/i,
@@ -54,14 +49,17 @@ module.exports = {
                 },]
             },
             {
-                test: /\.css$/i,
+                test: /\.css$/, // css文件处理
                 use: ['style-loader', 'css-loader']
-            },
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./public/index.html"
-        })
-    ]
+            template: './src/index.html' // 模板路径
+        }),
+    ],
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json'] // 添加ts和tsx后缀
+    }
 };
