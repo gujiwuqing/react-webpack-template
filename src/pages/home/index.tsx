@@ -4,7 +4,7 @@ import { Button } from "antd";
 export default function index() {
   return (
     <>
-      <div className="red">home</div>
+      <div className="red">home pages</div>
       <Button type='primary'>test</Button>
     </>
   );
