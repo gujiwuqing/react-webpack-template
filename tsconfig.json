@@ -1,13 +1,18 @@
 {
     "compilerOptions": {
-      "target": "es5", 
-      "module": "commonjs", 
-      "jsx": "react", 
+      "target": "es5",
+      "module": "commonjs",
+      "jsx": "react",
       "strict": true,
       "lib": [
         "DOM"
       ],
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "baseUrl": ".",
+      "paths": {
+        "@": ["src/*"],
+        "@components/*": ["src/components/*"],
+      }
     },
     "include": [
       "./src/**/*.ts",

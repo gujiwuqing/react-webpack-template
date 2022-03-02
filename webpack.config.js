@@ -61,6 +61,10 @@ module.exports = {
     }),
   ],
   resolve: {
+    alias: {
+      '@':path.resolve(__dirname,'src'),
+      '@components':path.resolve(__dirname,'src/components'),
+    },
     extensions: ['.ts', '.tsx', '.js', '.json'] // 添加ts和tsx后缀
   },
 };
