@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ProgressPlugin = require('progress-webpack-plugin');
 module.exports = {
     entry: './src/main.tsx', // 入口文件
     output: {
@@ -58,7 +59,20 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html' // 模板路径
         }),
-    ],
+      new ProgressPlugin({
+        activeModules: false,
+        entries: true,
+        handler(percentage, message, ...args) {
+          // custom logic
+        },
+        modules: true,
+        modulesCount: 5000,
+        profile: false,
+        dependencies: true,
+        dependenciesCount: 10000,
+        percentBy: null,
+      })
+],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
